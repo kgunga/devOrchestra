@@ -107,4 +107,4 @@ If there is a need always to restart a project screen when running project comma
 Run projects button runs all configured and saved commands of projects.
 
 ## License
-devOrchestra is Open Source under Apache Software License Version 2.0. Please read LICENSE file for license details.
+devOrchestra is Open Source project under Apache Software License Version 2.0. Please read LICENSE file for license details.
