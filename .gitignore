@@ -1,0 +1,28 @@
+**/*.class
+**/*.log
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+
+# Vagrant
+.vagrant
+
+# Node mosules
+
+**/node_modules/
+node_modules/

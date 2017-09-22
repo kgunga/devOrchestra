@@ -1,0 +1,172 @@
+
+<nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
+  <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse"
+          data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">devOrchestra</a>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="addProject()">
+            <samp>Add project</samp>
+          </button>
+        </li>
+        <li class="nav-item active">&nbsp;</li>
+        <li class="nav-item active">
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="saveProjects()">
+            <samp>Save</samp>
+            <i *ngIf="saving" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+          </button>
+        </li>
+        <li class="nav-item active">&nbsp;</li>
+        <li class="nav-item active">
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="runProjects()">Run projects</button>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container"><div class="row">&nbsp;</div></div>
+
+<div  class="container marketing">
+  <div *ngFor="let project of projects.projects; let index = index; trackBy: trackByIndex">
+    <div class="row featurette">
+      <div class="col-sd-5 col-md-5">
+        <h2 class="display-4">{{project.name}}</h2>
+        <div class="row lead">
+          <div class="col-1">&nbsp;</div>
+          <div class="col-2">
+            <p class="float-right" *ngIf="isInEditMode(index)">
+              <input type="button" class="btn btn-primary btn-sm" [value]="'Remove project'"
+                     (click)="removeProject(index)">
+            </p>
+          </div>
+          <div class="col-4">
+            <p class="float-right" *ngIf="isInEditMode(index)">
+              <input type="button" class="btn btn-primary btn-sm" [value]="project.commands?'Remove commands':'Add commands'"
+                     (click)="handleCommands(project)">
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="float-right" *ngIf="isInEditMode(index)">
+              <input type="button" class="btn btn-primary btn-sm" [value]="project.inotify?'Remove inotify':'Add inotify'"
+                     (click)="handleInotify(project)">
+            </p>
+            <p class="float-right" *ngIf="!isInEditMode(index)">
+              <button class="btn btn-primary btn-sm" (click)="runProjectCommands(project)">
+                <samp>Run project commands</samp>
+                <i *ngIf="runningCommands" class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+              </button>
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="float-right">
+              <input type="button" class="btn btn-primary btn-sm" [value]="isInEditMode(index)?'Done':'Edit'"
+                     (click)="toggleEditMode(index, project)">
+            </p>
+          </div>
+        </div>
+        <div *ngFor="let propertyName of project | keys">
+
+          <div class="row lead">
+            <div class="col-5 font-weight-bold">{{propertyName}}:</div>
+            <div class="col-7" *ngIf="!isInEditMode(index) || propertyName === 'screenName'"
+                   [innerText]="!isObject(project[propertyName]) && !isArray(project[propertyName])?project[propertyName]:''">
+            </div>
+
+            <div class="col-6" *ngIf="isEditable(index, propertyName, project[propertyName])">
+              <input type="text" *ngIf="!isBoolean(project[propertyName])"
+                     class="form-control" [(ngModel)]="project[propertyName]">
+
+              <label class="btn btn-outline-primary btn-sm" *ngIf="isBoolean(project[propertyName])">
+                <input type="checkbox"
+                     [checked]="project[propertyName]"
+                     [(ngModel)]="project[propertyName]">
+              </label>
+            </div>
+            <div class="col-6" *ngIf="isInEditMode(index) && !isEditable(index, propertyName, project[propertyName]) && isArray(project[propertyName])">
+              <button class="btn btn-outline-success btn-sm" (click)="addCommand(project)"><i class="fa fa-plus-circle" aria-hidden="true" ></i></button>
+            </div>
+
+          </div>
+
+          <hr *ngIf="!isObject(project[propertyName]) && !isArray(project[propertyName])">
+
+          <div *ngIf="isObject(project[propertyName])">
+            <div class="row lead" *ngFor="let propertyName2 of project[propertyName] | keys">
+              <div class="col-1 font-weight-bold"></div>
+              <div class="col-4 font-weight-bold">{{propertyName2}}:</div>
+              <div class="col-5" *ngIf="!isInEditMode(index) && propertyName2 !== 'events'">{{project[propertyName][propertyName2]}}</div>
+              <div class="col-5" *ngIf="!isInEditMode(index) && propertyName2 === 'events'">
+                <div class="row" *ngFor="let event of project[propertyName][propertyName2] | keys">
+                  <div class="col-12" *ngIf="project[propertyName][propertyName2][event] === true">{{event}}</div>
+                </div>
+              </div>
+              <div class="col-5" *ngIf="isInEditMode(index) && propertyName2 !== 'events'">
+                <input type="text"
+                       class="form-control" [(ngModel)]="project[propertyName][propertyName2]">
+              </div>
+              <div class="col-5" *ngIf="isInEditMode(index) && propertyName2 === 'events'">
+                <div class="row" *ngFor="let event of project[propertyName][propertyName2] | keys">
+                  <div class="col-12">
+                    <label>
+                      <input type="checkbox"
+                           [(ngModel)]="project[propertyName][propertyName2][event]">
+                      {{event}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="isArray(project[propertyName])">
+            <div class="row lead" *ngFor="let value of project[propertyName]; let i = index; trackBy: trackByIndex">
+              <div class="col-1 font-weight-bold"  *ngIf="!isInEditMode(index)"></div>
+              <div class="col-1 font-weight-bold"  *ngIf="isInEditMode(index)">
+                <button class="btn btn-outline-primary btn-sm" (click)="moveUp(project, i)">
+                  <i class="fa fa-caret-square-o-up" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-1 font-weight-bold"  *ngIf="isInEditMode(index)">
+                <button class="btn btn-outline-primary btn-sm" (click)="moveDown(project, i)">
+                  <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-7" *ngIf="!isInEditMode(index)" [innerText]="value"></div>
+              <div class="col-8" *ngIf="isInEditMode(index)">
+                <input type="text"
+                     class="form-control" [(ngModel)]="project[propertyName][i]">
+              </div>
+              <div class="col-2" *ngIf="isInEditMode(index)">
+                <button class="btn btn-outline-danger btn-sm" (click)="removeCommand(project, i)"><i class="fa fa-minus-circle" aria-hidden="true" ></i></button>
+              </div>
+            </div>
+          </div>
+          <hr *ngIf="isObject(project[propertyName]) || isArray(project[propertyName])">
+        </div>
+      </div>
+      <div class="col-sd-7 col-md-7">
+        <p class="float-right">
+          <button class="btn btn-primary" (click)="refreshTerminalConnection(index)"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        </p>
+        <div class="embed-responsive embed-responsive-4by3">
+          <iframe [src]="terminalLinks[index] | safeUrl" class="embed-responsive-item"></iframe>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+  </div>
+
+</div>

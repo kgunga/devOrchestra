@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Development Orchestration Tool (backend)",
+  "main": "index.js",
+  "author": "Kreshnik Gunga",
+  "license": "Apache License",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "koa": "^2.2.0",
+    "koa-morgan": "^1.0.1",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.2.0",
+    "koa-send": "^4.1.0",
+    "koa-static": "^3.0.0",
+    "koa2-cors": "^2.0.3",
+    "koa-body-parser": "^1.1.2",
+    "moment": "^2.18.1",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {}
+}
