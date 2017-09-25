@@ -100,7 +100,7 @@ Common commands for screen are:
 * cmd+esc // will enable rolling within screen
 
 Project can be removed by pressing Remove project button. Remember to save changes always.
-Above each terminal panel resides a refresh button. This buttons starts new terminal session to virtual box.
+Above each terminal panel resides a refresh button. This button starts new terminal session to virtual box.
 
 If there is a need always to restart a project screen when running project commands, check restartScreen.
 
