@@ -89,6 +89,7 @@ mkdir -p $CURRENT_DIR/scripts
 mkdir -p $CURRENT_DIR/scripts/logs
 
 cp $CURRENT_DIR/puppet/modules/baseconfig/files/*sh $CURRENT_DIR/scripts/
+chmod +x $CURRENT_DIR/scripts/*sh
 
 if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
     sudo sed -i "/exit/ i sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local
