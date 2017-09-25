@@ -61,12 +61,12 @@ install_with_npm_on_demand 'nodemon'
 install_with_npm_on_demand 'angular-cli'
 
 
-CURERNT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-mkdir -p $CURERNT_DIR/scripts
-mkdir -p $CURERNT_DIR/scripts/logs
+mkdir -p $CURRENT_DIR/scripts
+mkdir -p $CURRENT_DIR/scripts/logs
 
-cp $CURERNT_DIR/puppet/modules/baseconfig/files/*sh $CURERNT_DIR/scripts/
+cp $CURRENT_DIR/puppet/modules/baseconfig/files/*sh $CURRENT_DIR/scripts/
 
 if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
     sudo echo "sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" >> /etc/rc.local
