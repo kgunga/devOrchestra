@@ -13,6 +13,28 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+install_with_apt_on_demand()
+{
+    if [ "$(type -p $1 && echo no)" = "no" ]; then
+        echo "$1 not available, installing it"
+        sudo apt-get install "$1"
+        echo "$1 installed"
+    else
+        echo "$1 available, proceeding"
+    fi
+}
+
+install_with_npm_on_demand()
+{
+    if [ "$(type -p $1 && echo no)" = "no" ]; then
+        echo "$1 not available, installing it"
+        npm install -g "$1"
+        echo "$1 installed"
+    else
+        echo "$1 available, proceeding"
+    fi
+}
+
 install_with_apt_on_demand 'git'
 
 install_with_apt_on_demand 'python'
@@ -71,7 +93,7 @@ cp $CURRENT_DIR/puppet/modules/baseconfig/files/*sh $CURRENT_DIR/scripts/
 if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
     sudo sed -i "/exit/ i sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local
     if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
-        sudo echo "sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" >> /etc/rc.local
+        echo "sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" | sudo tee -a /etc/rc.local
     fi
 fi
 
@@ -108,26 +130,3 @@ echo
 echo
 echo "Restart virtual machine and you are ready to you devOrchestra"
 echo
-
-
-install_with_apt_on_demand()
-{
-    if [ "$(type -p $1 && echo no)" = "no" ]; then
-        echo "$1 not available, installing it"
-        sudo apt-get install "$1"
-        echo "$1 installed"
-    else
-        echo "$1 available, proceeding"
-    fi
-}
-
-install_with_npm_on_demand()
-{
-    if [ "$(type -p $1 && echo no)" = "no" ]; then
-        echo "$1 not available, installing it"
-        npm install -g "$1"
-        echo "$1 installed"
-    else
-        echo "$1 available, proceeding"
-    fi
-}
