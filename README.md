@@ -95,9 +95,9 @@ Please read manual of screen command line tool here [https://www.gnu.org/softwar
 Common commands for screen are:
 * screen -ls // to list all running screens
 * screen -r project1 // will log into screen with name project1
-* cmd+a // will tell screen to take command, this shortcut is always pressed
-* cmd+d // will leave screen without shutting down
-* cmd+esc // will enable rolling within screen
+* ctrl+a // will tell screen to take command, this shortcut is always pressed
+* ctrl+a then d // will leave screen without shutting down
+* ctrl+a then esc // will enable rolling within screen
 
 Project can be removed by pressing Remove project button. Remember to save changes always.
 Above each terminal panel resides a refresh button. This button starts new terminal session to virtual box.
