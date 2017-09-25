@@ -104,6 +104,8 @@ fi
 
 git clone https://github.com/krishnasrinivas/wetty "$CURRENT_DIR"/wetty
 
+git clone git://github.com/creationix/nvm.git /home/vagrant/.nvm
+
 DEV_ORCHESTRA_CONF_DIR='/vagrant/devOrchestra'
 
 mkdir -p $DEV_ORCHESTRA_CONF_DIR
