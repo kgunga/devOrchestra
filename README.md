@@ -69,7 +69,7 @@ for searching, but not yet implemented.
 ### Auto deploy project
 1. Click Add project button
 2. Give name for the project
-3. Give regex for files to be auto deployed .i.e *.java, *.xml
+3. Give regex for files to be auto deployed .i.e *.java|*.xml
 4. Check all events: delete, modify, create, move
 5. Give path to synchronized project i.e. /home/vagrant/project1
 6. Check autoStart if project should be run at box start up
