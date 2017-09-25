@@ -91,12 +91,18 @@ mkdir -p $CURRENT_DIR/scripts/logs
 cp $CURRENT_DIR/puppet/modules/baseconfig/files/*sh $CURRENT_DIR/scripts/
 chmod +x $CURRENT_DIR/scripts/*sh
 
+ln -s $CURRENT_DIR/devOrchestra/src/frontend $CURRENT_DIR/frontend
+ln -s $CURRENT_DIR/devOrchestra/src/backend $CURRENT_DIR/backend
+
+
 if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
     sudo sed -i "/exit/ i sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local
     if [ "$(grep -wc "$CURRENT_DIR/scripts/on-system-up.sh" /etc/rc.local)" -eq "0" ]; then
         echo "sudo -u vagrant $CURRENT_DIR/scripts/on-system-up.sh" | sudo tee -a /etc/rc.local
     fi
 fi
+
+git clone https://github.com/krishnasrinivas/wetty
 
 DEV_ORCHESTRA_CONF_DIR='/vagrant/devOrchestra'
 
