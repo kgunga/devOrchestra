@@ -40,7 +40,7 @@ screen -dmS wetty-server-screen bash -c "cd $DEV_ORCHESTRA_HOME/wetty; source ~/
 
 # Start all projectes marked as autoStart = true
 until $(curl --output /dev/null --silent --head --fail http://localhost:8400/projects); do
-    log "Liferay not yet up, waiting"
+    log "Backend not yet up, waiting"
     sleep 5
 done
 
