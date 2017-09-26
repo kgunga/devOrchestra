@@ -66,7 +66,7 @@ if [ ! -z "$4" ]; then
     for command in "${COMMANDS[@]}"; do
         log "Sending to screen '$1' command '$command'"
         # process "$i"
-        screen -S $1 -X stuff "$command\n"
+        screen -S "$TO_SCREEN_ID.$1" -X stuff "$command\n"
     done
 
     screen -S "$inotifyScreenName" -X stuff "export LOGGER='$logger'\n"
