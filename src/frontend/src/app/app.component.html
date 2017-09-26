@@ -1,5 +1,4 @@
-
-<nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse"
           data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -51,7 +50,7 @@
             </p>
           </div>
           <div class="col-4">
-            <p class="float-right" *ngIf="isInEditMode(index)">
+            <p class="float-right2" *ngIf="isInEditMode(index)">
               <input type="button" class="btn btn-primary btn-sm" [value]="project.commands?'Remove commands':'Add commands'"
                      (click)="handleCommands(project)">
             </p>
