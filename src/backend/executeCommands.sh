@@ -62,7 +62,11 @@ if [ ! -z "$4" ]; then
 
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-
+    # commands must be executed when starting from first time
+    for command in "${COMMANDS[@]}"; do
+        # process "$i"
+        screen -S $1 -X stuff "$command\n"
+    done
 
     screen -S "$inotifyScreenName" -X stuff "export LOGGER='$logger'\n"
     screen -S "$inotifyScreenName" -X stuff "export LOG_FILE='$logfile'\n"
