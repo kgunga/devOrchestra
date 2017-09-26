@@ -64,6 +64,7 @@ if [ ! -z "$4" ]; then
 
     # commands must be executed when starting from first time
     for command in "${COMMANDS[@]}"; do
+        log "Sending to screen '$1' command '$command'"
         # process "$i"
         screen -S $1 -X stuff "$command\n"
     done
@@ -85,6 +86,7 @@ if [ ! -z "$4" ]; then
             screen -wipe
         fi
         for command in "${COMMANDS[@]}"; do
+            log "Sending to screen '$1' command '$command'"
             # process "$i"
             screen -S $1 -X stuff "$command\n"
         done
