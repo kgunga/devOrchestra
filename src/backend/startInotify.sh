@@ -24,6 +24,7 @@ inotifywait $PATH_TO_WATCH -m -r $INOTIFY_EVENTS | while read path action file; 
     if [ $(echo "$file" | grep -Ei "$FILE_REGEX_PATTERN") ]; then
         IFS=';' read -ra COMMANDS <<< "$COMMANDS_TO_EXECUTE"
         for command in "${COMMANDS[@]}"; do
+            log "Action '$action' occurred in file '$file' in path '$path'"
             log "Sending from inotify-screen to '$TO_SCREEN' command '$command'"
             # process "$i"
             screen -S "$TO_SCREEN" -X stuff "$command\n"
