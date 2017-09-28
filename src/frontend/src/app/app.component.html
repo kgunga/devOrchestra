@@ -110,7 +110,11 @@
                   <div class="col-12" *ngIf="project[propertyName][propertyName2][event] === true">{{event}}</div>
                 </div>
               </div>
-              <div class="col-5" *ngIf="isInEditMode(index) && propertyName2 !== 'events'">
+              <div class="col-5" *ngIf="isInEditMode(index) && propertyName2 !== 'events' && propertyName2 !== 'restart2ndScreen'">
+                <input type="text"
+                       class="form-control" [(ngModel)]="project[propertyName][propertyName2]">
+              </div>
+              <div class="col-5" *ngIf="isInEditMode(index) && propertyName2 === 'restart2ndScreen'">
                 <input type="text"
                        class="form-control" [(ngModel)]="project[propertyName][propertyName2]">
               </div>
