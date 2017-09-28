@@ -13,7 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# script arguments: $1 = screen name, $2  = restart screen = true/false, $3 = commands with semicolon separated, $4 = path to listen, $5 = file name regex, $6 = inotify events
+# script arguments: $1 = screen name, $2  = restart screen = true/false, $3 = commands with semicolon separated,
+# $4 = path to listen, $5 = file name regex, $6 = inotify events, $7 = restart second screen
 logger="/home/vagrant/devOrchestra/scripts/log.sh"
 source $logger
 
@@ -68,6 +69,10 @@ if [ ! -z "$4" ]; then
         # process "$i"
         screen -S "$TO_SCREEN_ID.$1" -X stuff "$command\n"
     done
+
+    screen -S "$inotifyScreenName" -X stuff "export RESTART_TO_SCREEN='$7'\n"
+    screen -S "$inotifyScreenName" -X stuff "export TO_SCREEN_NAME='$1'\n"
+
 
     screen -S "$inotifyScreenName" -X stuff "export LOGGER='$logger'\n"
     screen -S "$inotifyScreenName" -X stuff "export LOG_FILE='$logfile'\n"

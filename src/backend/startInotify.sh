@@ -22,6 +22,19 @@ log "Will execute commands $COMMANDS_TO_EXECUTE";
 
 inotifywait $PATH_TO_WATCH -m -r $INOTIFY_EVENTS | while read path action file; do
     if [ $(echo "$file" | grep -Ei "$FILE_REGEX_PATTERN") ]; then
+        if [ "$RESTART_TO_SCREEN" = "true" ]; then
+            log "Restarting second screen '$TO_SCREEN'"
+            killResult=$(ps aux | grep "dmS $TO_SCREEN_NAME bash" | grep -v grep | awk '{print $2}' | xargs -I {} kill -9 {})
+            log "Screen stopped: $killResult"
+
+            result=$(screen -wipe)
+            log "Screens wiped: $result"
+
+            screen -dmS "$TO_SCREEN_NAME" bash -c "echo screen '$TO_SCREEN_NAME' started ; exec bash"
+            TO_SCREEN_ID=$(ps aux | grep "dmS $TO_SCREEN_NAME bash" | grep -v grep | awk '{print $2}')
+            TO_SCREEN="$TO_SCREEN_ID.$TO_SCREEN_NAME"
+        fi
+
         IFS=';' read -ra COMMANDS <<< "$COMMANDS_TO_EXECUTE"
         for command in "${COMMANDS[@]}"; do
             log "Action '$action' occurred in file '$file' in path '$path'"

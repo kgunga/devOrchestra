@@ -17,4 +17,5 @@ export class Inotify {
   regex: string = '';
   events: Object = {"delete": false, "modify": false,"create": false, "move": false};
   path: string = '';
+  restart2ndScreen: boolean = false;
 }

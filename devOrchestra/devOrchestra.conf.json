@@ -1,1 +1,1 @@
-{"projects":[{"name":"Test1","screenName":"Test1","autoStart":true,"restartScreen":false},{"name":"Test2","screenName":"Test2","autoStart":true,"restartScreen":false}]}
+{"projects":[{"name":"Test1","screenName":"Test1","autoStart":true,"restartScreen":false,"inotify":{"regex":"test.txt","events":{"delete":false,"modify":true,"create":false,"move":false},"path":"/tmp", "restart2ndScreen":true},"commands":["ls -lah"]},{"name":"Test2","screenName":"Test2","autoStart":true,"restartScreen":false}]}

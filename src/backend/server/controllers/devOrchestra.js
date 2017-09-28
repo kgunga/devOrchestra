@@ -104,6 +104,7 @@ export default class DevOrchestraCtrl extends BaseCtrl {
                 scriptArguments.push(regex);
                 scriptArguments.push("'" + eventsString + "'");
             }
+            scriptArguments.push(project.restart2ndScreen === true);
             console.log('invoking executeCommands.sh with arguments: ', scriptArguments.join(' ').trim());
             result = execSync('./executeCommands.sh ' + scriptArguments.join(' ').trim()).toString();
         }
